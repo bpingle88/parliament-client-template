@@ -505,6 +505,7 @@ const processOpenApiFiles = async (
           )
         } catch (e) {
           console.log(`Skipping ${filepath} as it is not an OpenAPI spec`)
+          filepath.includes('apis/quote/openapi.yaml') ? console.log(e) : console.log("")
         }
       })
     }
