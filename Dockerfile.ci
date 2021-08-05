@@ -1,11 +1,9 @@
-FROM node:14.16.1-buster-slim
-
-COPY . /workspace
-WORKDIR /workspace
-
-RUN apt-get update && \
-    apt-get install -y \
-      dh-autoreconf build-essential \
-      git make python python-dev
-
-RUN yarn install
+FROM nginx:alpine
+# Set working directory to nginx asset directory
+WORKDIR /usr/share/nginx/html
+# Remove default nginx static assets
+RUN rm -rf ./*
+# Copy static assets from builder stage
+COPY /public .
+# Containers run nginx with global directives and daemon off
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
